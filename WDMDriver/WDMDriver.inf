@@ -4,8 +4,8 @@
 
 [Version]
 Signature="$WINDOWS NT$"
-Class=System
-ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
+Class=%ClassName%
+ClassGuid={1B098C04-FE6F-4BEC-B5EA-EB1581D97E96}
 Provider=%ManufacturerName%
 DriverVer=
 CatalogFile=WDMDriver.cat
@@ -14,16 +14,37 @@ PnpLockdown=1
 [DestinationDirs]
 DefaultDestDir = 13
 
+
 [SourceDisksNames]
 1 = %DiskName%,,,""
 
 [SourceDisksFiles]
+WDMDriver.sys = 1
+
 
 [Manufacturer]
-%ManufacturerName%=Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+%ManufacturerName%=Standard,NT$ARCH$.10.0...16299
 
 [Standard.NT$ARCH$.10.0...16299]
+%DeviceDesc%=WDMDriver_Device,ROOT\WDMDriver
+
+[WDMDriver_Device.NTamd64]
+CopyFiles=@WDMDriver.sys
+
+[WDMDriver_Device.NTamd64.Services]
+AddService=WDMDriver,2,WDMDriver_Service_Inst
+
+[WDMDriver_Service_Inst]
+DisplayName=%ServiceDesc%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%13%\WDMDriver.sys
+
 
 [Strings]
-ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
-DiskName="WDMDriver Source Disk"
+ManufacturerName="WDM Project"
+ClassName="WDMDriver"
+DiskName="Generic WDM Driver Source Disk"
+DeviceDesc="Generic WDM Driver Device"
+ServiceDesc="Generic WDM Driver Service"

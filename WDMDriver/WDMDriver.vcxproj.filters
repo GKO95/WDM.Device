@@ -32,5 +32,8 @@
     <ClInclude Include="WDMDriver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WDMDriverAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

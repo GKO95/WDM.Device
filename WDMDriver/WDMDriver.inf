@@ -5,7 +5,7 @@
 [Version]
 Signature="$WINDOWS NT$"
 Class=%ClassName%
-ClassGuid={1B098C04-FE6F-4BEC-B5EA-EB1581D97E96}
+ClassGuid={26FC82AE-AE00-46A7-875B-5D98F540B3EB}
 Provider=%ManufacturerName%
 DriverVer=
 CatalogFile=WDMDriver.cat
@@ -15,6 +15,9 @@ PnpLockdown=1
 DefaultDestDir = 13
 
 
+; =================== SourceDisk sections ===================
+; This section contains a list of files that are copied during installation.
+
 [SourceDisksNames]
 1 = %DiskName%,,,""
 
@@ -22,8 +25,29 @@ DefaultDestDir = 13
 WDMDriver.sys = 1
 
 
+; =================== ClassInstall32 section ===================
+; Installs a new device setup class for devices in the new class.
+;  * Invalid section in universal INF file.
+
+[ClassInstall32] 
+AddReg=ClassInstall_AddReg
+
+[ClassInstall_AddReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+
+; =================== Manufacturer section ===================
+; Identifies the manufacturer of one or more devices that can be installed by using the INF file.
+
 [Manufacturer]
 %ManufacturerName%=Standard,NT$ARCH$.10.0...16299
+
+
+; =================== DDInstall section ===================
+; Contain instructions for...
+;  1. Installing driver files
+;  2. Writing any device-specific and/or driver-specific information into the registry.
 
 [Standard.NT$ARCH$.10.0...16299]
 %DeviceDesc%=WDMDriver_Device,ROOT\WDMDriver
@@ -41,6 +65,9 @@ StartType=3
 ErrorControl=1
 ServiceBinary=%13%\WDMDriver.sys
 
+
+; =================== Strings Section ===================
+; INF file must have at least one Strings section to define every %strkey% token specified elsewhere in that INF.
 
 [Strings]
 ManufacturerName="WDM Project"
